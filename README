@@ -1,0 +1,13 @@
+NaturalSorting
+==============
+
+Natural sorting of arrays and strings
+
+
+Example
+=======
+
+["a100", "a1"].sort_natural
+
+
+Copyright (c) 2008 Logan Raarup, released under the MIT license
