@@ -1,3 +1,1 @@
-# Include hook code here
-require "core_ext/string"
-require "core_ext/array"
+require File.join(File.dirname(__FILE__), 'rails', 'init')

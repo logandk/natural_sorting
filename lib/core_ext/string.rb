@@ -1,4 +1,5 @@
-# natcmp.rb
+# natcmp.rb (http://rubyforge.org/projects/natcmp/)
+# Version 1.3
 #
 # Natural order comparison of two strings
 # e.g. "my_prog_v1.1.0" < "my_prog_v1.2.0" < "my_prog_v1.10.0"
@@ -7,7 +8,7 @@
 # Based on Martin Pool's "Natural Order String Comparison" originally written in C
 # http://sourcefrog.net/projects/natsort/
 #
-# This implementation is Copyright (C) 2003 by Alan Davies
+# This implementation is Copyright (C) 2003, 2008 by Alan Davies
 # <cs96and_AT_yahoo_DOT_co_DOT_uk>
 #
 # This software is provided 'as-is', without any express or implied
@@ -25,52 +26,28 @@
 # 2. Altered source versions must be plainly marked as such, and must not be
 #    misrepresented as being the original software.
 # 3. This notice may not be removed or altered from any source distribution.
-
 class String
 
-# 'Natural order' comparison of two strings
-def String.natcmp(str1, str2, case_sensitive = false)
-	str1, str2 = str1.dup, str2.dup
-	compareExpression = /^(\D*)(\d*)(.*)$/
+  # 'Natural order' comparison of two strings
+  def self.natcmp(str1, str2, options = {})
+    case_sensitive = options[:case_sensitive] || false
+    
+    min = lambda { |a, b| a < b ? a : b }
 
-	unless case_sensitive
-		str1.downcase!
-		str2.downcase!
-	end
+    # Split the strings into digits and non-digits
+    strings = [str1, str2].inject(Array.new) do |arr, str|
+      str = str.downcase unless case_sensitive
+      arr << str.tr(" \t\r\n", '').split(/(\d+)/)
+    end
 
-	# Remove all whitespace
-	str1.gsub!(/\s*/, '')
-	str2.gsub!(/\s*/, '')
+    # Loop through all the digit parts and convert to integers if neither of them begin with a zero
+    1.step(min.call(strings[0].size, strings[1].size) - 1, 2) do |idx|
+      if (strings[0][idx] !~ /^0/) and (strings[1][idx] !~ /^0/)
+        strings.each { |arr| arr[idx] = arr[idx].to_i }
+      end
+    end
 
-	while (str1.length > 0) or (str2.length > 0) do
-		# Extract non-digits, digits and rest of string
-		str1 =~ compareExpression
-		chars1, num1, str1 = $1.dup, $2.dup, $3.dup
+    strings[0] <=> strings[1]
+  end
 
-		str2 =~ compareExpression
-		chars2, num2, str2 = $1.dup, $2.dup, $3.dup
-
-		# Compare the non-digits
-		case (chars1 <=> chars2)
-			when 0 # Non-digits are the same, compare the digits...
-				# If either number begins with a zero, then compare alphabetically,
-				# otherwise compare numerically
-				if (num1[0] != 48) and (num2[0] != 48)
-					num1, num2 = num1.to_i, num2.to_i
-				end
-
-				case (num1 <=> num2)
-					when -1 then return -1
-					when 1 then return 1
-				end
-			when -1 then return -1
-			when 1 then return 1
-		end # case
-
-	end # while
-
-	# Strings are naturally equal
-	return 0
 end
-
-end # class String
