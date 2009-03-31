@@ -47,10 +47,13 @@ By default, the *sort_natural* method is not case-sensitive, but this can be con
 	>> ["apple", "flaf", "Hello world!", "Arrrrr"].sort_natural :case_sensitive => true
 	=> ["Arrrrr", "Hello world!", "apple", "flaf"]
 
-Also, the plugin adds a couple of other methods:
+Also, the plugin adds a couple of other methods. Replace the array with the sorted version:
 
-	[...].sort_natural! # Replace the array with the sorted version
-	String.natcmp("hello", "world"[, :case_sensitive => true]) # Compare two strings naturally, default case_sensitive = false
+	[...].sort_natural!
+
+Compare two strings naturally, default case_sensitive = false:
+
+	String.natcmp("hello", "world"[, :case_sensitive => true])
 
 
 
