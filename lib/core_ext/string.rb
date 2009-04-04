@@ -35,7 +35,7 @@ class String
     min = lambda { |a, b| a < b ? a : b }
 
     # Split the strings into digits and non-digits
-    strings = [str1, str2].inject(Array.new) do |arr, str|
+    strings = [str1.to_s, str2.to_s].inject(Array.new) do |arr, str|
       str = str.downcase unless case_sensitive
       arr << str.tr(" \t\r\n", '').split(/(\d+)/)
     end
