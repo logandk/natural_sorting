@@ -29,12 +29,12 @@ Use this if you prefer the idea of being able to easily switch between using edg
 Usage
 =====
 
-The default *sort* method will sort your array like this:
+The default `sort` method will sort your array like this:
 
 	>> ["Image 1", "Image 3", "Image 11", "Image 20"].sort
 	=> ["Image 1", "Image 11", "Image 20", "Image 3"]
 
-This plugin introduces the *sort_natural* method, which sorts your array like this:
+This plugin introduces the `sort_natural` method, which sorts your array like this:
 
 	>> ["Image 1", "Image 3", "Image 11", "Image 20"].sort_natural
 	=> ["Image 1", "Image 3", "Image 11", "Image 20"]
@@ -42,7 +42,7 @@ This plugin introduces the *sort_natural* method, which sorts your array like th
 Much better.
 
 
-By default, the *sort_natural* method is not case-sensitive, but this can be controlled like this:
+By default, the `sort_natural` method is not case-sensitive, but this can be controlled like this:
 
 	>> ["apple", "flaf", "Hello world!", "Arrrrr"].sort_natural :case_sensitive => true
 	=> ["Arrrrr", "Hello world!", "apple", "flaf"]
@@ -59,6 +59,6 @@ Compare two strings naturally, default case_sensitive = false:
 
 Credits
 =======
-The *natcmp* method is based on the work by Alan Davies, as described in *lib/core_ext/string.rb*.
+The `natcmp` method is based on the work by *Alan Davies*, as described in `lib/core_ext/string.rb`.
 
 Copyright (c) 2008 Logan Raarup, released under the MIT license
